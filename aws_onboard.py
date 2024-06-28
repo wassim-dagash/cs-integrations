@@ -41,7 +41,7 @@ def main():
     args = parser.parse_args()
 
     if args.type == "AWSRole":
-        if not args.role_arn or not args.external_id or not args.org_id or not args.management_account_id:
+        if not args.role_arn or not args.external_id:
             parser.error("For AWSRole type, role-arn and external-id are required . If onboarding or, then org-id, and management-account-id are required.")
         response = create_cloud_credentials(args.tenant_id, args.service_account_key, args.service_account_token, args.account_id, args.type,
                                              role_arn=args.role_arn, external_id=args.external_id, org_id=args.org_id, management_account_id=args.management_account_id)
