@@ -45,7 +45,7 @@ def create_report(api_key, api_secret, tenant_id, file_name, file_format, from_t
 
 
 
-def create_flow_report(api_key, api_secret, tenant_id, file_name, file_format, from_time, to_time):
+def create_flow_report(api_key, api_secret, tenant_id, file_name, file_format, from_time, to_time, max_results):
     url = 'https://cloud.illum.io/api/v1/flows'
 
     # Encode the API key and secret
@@ -78,7 +78,7 @@ def create_flow_report(api_key, api_secret, tenant_id, file_name, file_format, f
             "start_time": from_time,
             "end_time": to_time
         },
-        "max_results": 100
+        "max_results": max_results
     }
 
     response = requests.post(url, headers=headers, json=data)
@@ -118,14 +118,15 @@ def main():
     parser.add_argument('--file_format', choices=['csv', 'json'], required=True, help='File format for the report')
     parser.add_argument('--from_time', required=True, help='Start time for the report (e.g., 2024-08-04T00:01:18Z)')
     parser.add_argument('--to_time', required=True, help='End time for the report (e.g., 2024-08-05T00:01:18Z)')
+    parser.add_argument('--max_results', required=True, help='The returned maxmimum limit for entries of flows')
 
     args = parser.parse_args()
     
     #status_code, response_text = create_report(args.api_key, args.api_secret, args.tenant_id, args.file_name, args.file_format, args.from_time, args.to_time)
-    status_code, response_text = create_flow_report(args.api_key, args.api_secret, args.tenant_id, args.file_name, args.file_format, args.from_time, args.to_time)
+    status_code, response_text = create_flow_report(args.api_key, args.api_secret, args.tenant_id, args.file_name, args.file_format, args.from_time, args.to_time, args.max_results)
     
-    print(f"Status Code: {status_code}")
-    print(f"Response: {response_text}")
+    #print(f"Status Code: {status_code}")
+    #print(f"Response: {response_text}")
 
 if __name__ == "__main__":
     main()
