@@ -84,11 +84,11 @@ def create_flow_report(api_key, api_secret, tenant_id, file_name, file_format, f
     response = requests.post(url, headers=headers, json=data)
 
 
-    if response.status_code == 200:
+    if response.status_code == 200 and response.content:
         resp_json = response.json()
         flows = resp_json['flows']
         
-        with open('data.csv', 'w', newline='') as f:
+        with open(file_name, 'w', newline='') as f:
             csv_file = csv.writer(f)
 
             # Assuming the response content is a list of dictionaries
